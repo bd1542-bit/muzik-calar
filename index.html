@@ -8,7 +8,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>Müzik Çalar</title>
-<link rel="manifest" href="#" id="manifest-link">
+<link rel="manifest" href="manifest.json">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
   :root {
@@ -535,12 +535,13 @@ const manifest = {
   theme_color: '#1a1a2e',
   orientation: 'portrait',
   icons: [
-    { src: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='80' fill='%231a1a2e'/%3E%3Ctext x='256' y='320' text-anchor='middle' font-size='260' fill='%237c3aed'%3E🎵%3C/text%3E%3C/svg%3E", sizes: '512x512', type: 'image/svg+xml', purpose: 'any maskable' }
+    { src: "icon-192x192.png", sizes: "192x192", type: "image/png", purpose: "any maskable" },
+    { src: "icon-512x512.png", sizes: "512x512", type: "image/png", purpose: "any maskable" }
   ]
 };
 const blob2 = new Blob([JSON.stringify(manifest)], {type:'application/json'});
 const murl = URL.createObjectURL(blob2);
-document.getElementById('manifest-link').href = murl;
+
 
 // Init
 openDB().then(() => renderList());
