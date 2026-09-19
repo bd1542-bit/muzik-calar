@@ -1183,11 +1183,11 @@
         </button>
       </div>
 
-      <!-- Hızlı Eylem Butonları (MYT Tara & Dosya Ekle) -->
+      <!-- Hızlı Eylem Butonları (Ses Klasörü & Müzik Ekle) -->
       <div class="action-banner-row">
         <div class="action-chip" onclick="scanDeviceDirectory()">
-          <svg class="icon-svg sm" viewBox="0 0 24 24"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/><path d="m9 13 3 3 3-3"/><path d="M12 10v6"/></svg>
-          MYT / İndirilenler Klasörünü Tara
+          <svg class="icon-svg sm" viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+          Telefondaki "Ses" / Müzik Klasöründen Çek
         </div>
         <label for="hidden-file-input" class="action-chip" style="cursor:pointer">
           <svg class="icon-svg sm" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
@@ -2003,12 +2003,16 @@ function handleFileInput(e) {
   }
 }
 
-// MYT / İndirilenler Klasörünü Tara
+// Telefonun "Ses" / Müzik Klasörünü Tara
 async function scanDeviceDirectory() {
   if ('showDirectoryPicker' in window) {
     try {
-      const dirHandle = await window.showDirectoryPicker();
-      showToast('Klasör taranıyor...');
+      const dirHandle = await window.showDirectoryPicker({
+        id: 'phone_audio_folder',
+        mode: 'read',
+        startIn: 'music'
+      });
+      showToast('Ses klasörü taranıyor...');
       const gatheredFiles = [];
 
       for await (const entry of dirHandle.values()) {
@@ -2026,17 +2030,23 @@ async function scanDeviceDirectory() {
         showToast('Seçilen klasörde müzik dosyası bulunamadı.');
       }
     } catch (err) {
-      if (err.name !== 'AbortError') showToast('Klasör okunamadı: ' + err.message);
+      if (err.name !== 'AbortError') {
+        // Hata durumunda doğrudan ses seçiciyi aç
+        openAudioPickerFallback();
+      }
     }
   } else {
-    // Fallback: Klasör seçimi destekleyen gizli dosya seçici
-    const fallbackInput = document.createElement('input');
-    fallbackInput.type = 'file';
-    fallbackInput.webkitdirectory = true;
-    fallbackInput.multiple = true;
-    fallbackInput.onchange = (e) => processAudioFiles(e.target.files);
-    fallbackInput.click();
+    openAudioPickerFallback();
   }
+}
+
+function openAudioPickerFallback() {
+  const fallbackInput = document.createElement('input');
+  fallbackInput.type = 'file';
+  fallbackInput.accept = 'audio/*';
+  fallbackInput.multiple = true;
+  fallbackInput.onchange = (e) => processAudioFiles(e.target.files);
+  fallbackInput.click();
 }
 
 /* ================= 8. OYNATMA VE KONTROL MANTIĞI ================= */
