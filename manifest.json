@@ -1,26 +1,31 @@
 {
-  "name": "Müzik Çalar",
-  "short_name": "Müzik",
-  "description": "Kişisel müzik çalar uygulaması",
-  "start_url": "/muzik-calar/",
-  "scope": "/muzik-calar/",
+  "name": "Müzik Çalar Pro",
+  "short_name": "Müzik Pro",
+  "description": "Profesyonel Web ve Çevrimdışı Müzik Çalar — Pikap, Ekolayzer ve Zil Sesi Kesici",
+  "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#0f0f1a",
-  "theme_color": "#1a1a2e",
+  "background_color": "#0b0b14",
+  "theme_color": "#0b0b14",
   "orientation": "portrait",
-  "lang": "tr",
+  "categories": ["music", "audio", "multimedia"],
   "icons": [
     {
-      "src": "icon-192x192.png",
-      "sizes": "192x192",
-      "type": "image/png",
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23161628'/><circle cx='50' cy='50' r='36' fill='%23111' stroke='%238b5cf6' stroke-width='4'/><circle cx='50' cy='50' r='14' fill='%238b5cf6'/><circle cx='50' cy='50' r='4' fill='%23fff'/></svg>",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
       "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Kütüphane",
+      "url": "./index.html#library",
+      "icons": [{ "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><rect width='24' height='24' fill='%238b5cf6'/></svg>", "sizes": "96x96" }]
     },
     {
-      "src": "icon-512x512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "name": "Favoriler",
+      "url": "./index.html#favorites",
+      "icons": [{ "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><rect width='24' height='24' fill='%23f59e0b'/></svg>", "sizes": "96x96" }]
     }
   ]
 }
